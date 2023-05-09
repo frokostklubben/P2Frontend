@@ -1,0 +1,229 @@
+<template>
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Søgeformular</title>
+      <!-- Bootstrap CSS -->
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css"
+        integrity="sha512-VHZD8SeLE/0f/xFtZvOzoWJ9XAdN1t/OaafJwDX2yWx8DhOsTKnBBJlPvA42PFXpX9+Lc1gOYVEw5dq5xW8qgw=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
+      <style>
+        .form-group {
+          margin-bottom: 10px;
+        }
+        /*   .form-row {
+          justify-content: center;
+        } */
+        .form-row .form-group {
+          margin-right: 10px;
+          margin-left: 10px;
+        }
+      
+      </style>
+    </head>
+    <body>
+      <div class="container-fluid px-0">
+        <div class="row g-0">
+          <div class="col-lg-6 vh-100">
+            <div class="d-flex">
+              <div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="gender">Køn:</label>
+                    <div class="justify-content-lg-start p-1">
+                      <div class="form-check form-check-inline">
+                        <input
+                          type="radio"
+                          id="gender-male"
+                          name="gender"
+                          class="form-check-input"
+                          value="male"
+                        />
+                        <label class="form-check-label" for="gender-male"
+                          >Mand</label
+                        >
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input
+                          type="radio"
+                          id="gender-female"
+                          name="gender"
+                          class="form-check-input"
+                          value="female"
+                        />
+                        <label class="form-check-label" for="gender-female"
+                          >Kvinde</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="height">Højde:</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="height"
+                      placeholder="Højde i cm fx 187"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="fill">Fyld:</label>
+                    <div class="d-flex justify-content-lg-start p-1">
+                      <div class="form-check form-check-inline">
+                        <input
+                          type="radio"
+                          id="fill-fiber"
+                          name="fill"
+                          class="form-check-input"
+                          value="fiber"
+                        />
+                        <label class="form-check-label" for="fill-fiber"
+                          >Fiber</label
+                        >
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input
+                          type="radio"
+                          id="fill-dun"
+                          name="fill"
+                          class="form-check-input"
+                          value="dun"
+                        />
+                        <label class="form-check-label" for="fill-dun"
+                          >Dun</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="cold">Er du kuldskær?</label>
+                      <div class="d-flex justify-content-lg-start p-1">
+                        <div class="form-check form-check-inline">
+                          <input
+                            type="radio"
+                            id="cold-yes"
+                            name="cold"
+                            class="form-check-input"
+                            value="true"
+                          />
+                          <label class="form-check-label" for="cold-yes"
+                            >Ja</label
+                          >
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            type="radio"
+                            id="cold-no"
+                            name="cold"
+                            class="form-check-input"
+                            value="false"
+                          />
+                          <label class="form-check-label" for="cold-no"
+                            >Nej</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="temp"
+                      >Turens laveste temperatur:</label
+                    >
+                    <span id="temp-value"></span>
+                    <input
+                      type="range"
+                      class="form-range"
+                      id="temp"
+                      min="-40"
+                      max="40"
+                      step="1"
+                      value="0"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="price">Max pris:</label>
+                    <span id="price-value"></span>
+                    <input
+                      type="range"
+                      class="form-range"
+                      id="price"
+                      min="0"
+                      max="13000"
+                      step="500"
+                      value="5000"
+                    />
+                  </div>
+
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="submit-info"
+                  >
+                    Find sovepose
+                  </button>
+                
+              </div>
+              <div id="status"></div>
+            </div>
+
+            <div class="col-lg-12 right-result bg-success">
+              <div class="row bg-black" id="tbl-body2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        < class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Sovepose model</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body" id="modal-body"></div>
+          <div class="modal-body" id="modal-link"></div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bootstrap JS -->
+      <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js"
+        integrity="sha512-jEZKv7yN/zWtt25FAaKsHNzYt/UQ+RY1n9ZjK3m3q3qMwTtTxBTn/3q3Vi7zEiW8KvxfwoaeLxo/sN/Lqb33ug=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      ></script>
+    </body>
+  </html>
+</template>

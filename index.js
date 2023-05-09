@@ -20,14 +20,14 @@ window.addEventListener("load", async () => {
     "./pages/sleeping-bag-form/sleeping-bag-form.html"
   );
   const templateSleepingBagForm2 = await loadTemplate(
-    "./pages/sleeping-bag-form2/sleeping-bag-form2.html"
+    "./pages/sleeping-bag-form2/sleeping-bag-form2_udvikles.html"
   );
   const templateNotFound = await loadTemplate("./pages/notFound/notFound.html");
 
   adjustForMissingHash();
 
   const router = new Navigo("/", { hash: true });
-  //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
+
   window.router = router;
 
   router
@@ -40,10 +40,9 @@ window.addEventListener("load", async () => {
     .on({
       //For very simple "templates", you can just insert your HTML directly like below
       "/": () =>
-        (document.getElementById("content").innerHTML = `<h2>Home</h2>
+        (document.getElementById("content").innerHTML = `
       <p style='margin-top:2em'>
-      This is the content of the Home Route <br/>
-      Observe that this is so simple that all HTML is added in the on-handler for the route. 
+      
       </p>
      `),
       "/sleeping-bag-result": () => {

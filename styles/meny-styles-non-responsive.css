@@ -26,7 +26,6 @@ ul.menu-horizontal li a:hover:not(.active) {
   background-color: #111;
 }
 
-
 ul.menu-horizontal a.active {
   background-color: #04aa6d;
 }
@@ -95,3 +94,8 @@ ul.menu-simple li {
 /* 
  Simple style END
 */
+
+.container {
+  margin-left: 0px;
+  margin-right: 0px;
+}

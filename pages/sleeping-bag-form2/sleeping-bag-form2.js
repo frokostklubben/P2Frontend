@@ -5,7 +5,6 @@ import {
   makeOptions,
 } from "../../utils.js";
 
-
 export function initSleepingBagForm2() {
   document
     .getElementById("submit-info")
@@ -14,10 +13,9 @@ export function initSleepingBagForm2() {
   document.getElementById("price")?.addEventListener("input", adjustPriceValue);
 }
 
-
 function sleepingBagFormSend() {
   const trip = {};
-  
+
   try {
     const environmentTemperatureMin =
       document.getElementById("temp-value")?.textContent;
@@ -67,7 +65,7 @@ function sleepingBagFormSend() {
     }
   } catch (error) {}
 
-  fetchFilteredSleepingBags(trip)
+  fetchFilteredSleepingBags(trip);
 }
 
 function adjustTempValue() {
@@ -80,12 +78,7 @@ function adjustPriceValue() {
   price.textContent = this.value;
 }
 
-
-
-
 const URL = "http://localhost:8080/api/sleeping-bags";
-
-
 
 /* 
 async function getFilteredSleepingBags() {
@@ -101,7 +94,8 @@ function showAllData(data) {
   const tableRowsArray = data.map(
     (sleepingbag) => `
   <div class="card m-4 justify-content-center" style="width:300px">
-  <img class="card-img-top" src="https://www.fotoagent.dk/single_picture/12535/138/large/389010021.jpg" alt="Image" style="width:250px">
+    <img class="card-img-top" src="https://www.fotoagent.dk/single_picture/12535/138/large/389010021.jpg" alt="Image" style="width:250px">
+  
   <div class="card-body">
     <h4 class="card-title">${sleepingbag.model}</h4>
     <p class="card-text">${sleepingbag.brand}</p>
@@ -118,7 +112,6 @@ function showAllData(data) {
   );
 
   document.getElementById("tbl-body2").onclick = showUserDetails;
-
 
   const tableRowsString = tableRowsArray.join("\n");
   document.getElementById("tbl-body2").innerHTML =
@@ -165,7 +158,6 @@ async function showUserDetails(evt) {
 function generateLink(sku) {
   return `<a href="https://www.friluftsland.dk/msearch?q=${sku}" target="_blank">Link</a>`;
 }
-
 
 async function fetchFilteredSleepingBags(tripObj) {
   //TODO: change to true when security is added
