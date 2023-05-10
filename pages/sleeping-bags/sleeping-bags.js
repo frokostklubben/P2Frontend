@@ -15,10 +15,10 @@ export function initSleepingBags() {
 
   document
     .getElementById("price-min")
-    ?.addEventListener("input", adjustPriceValue);
+    ?.addEventListener("input", adjustPriceValueMin);
   document
     .getElementById("price-max")
-    ?.addEventListener("input", adjustPriceValue);
+    ?.addEventListener("input", adjustPriceValueMax);
 }
 
 function sleepingBagFormSend() {
@@ -89,33 +89,33 @@ function adjustTempValue() {
   temp.textContent = this.value;
 }
 
-function adjustPriceValue() {
-  const priceMin = document.getElementById("price-min").value;
-  const priceMax = document.getElementById("price-max").value;
 
-  const thumbLeft = document.querySelector(".slider > .thumb.left");
-  const thumbRight = document.querySelector(".slider > .thumb.right");
-  const range = document.querySelector(".slider > .range");
-
-  document.getElementById("price-value-min").textContent = priceMin;
-
-  document.getElementById("price-value-max").textContent = priceMax;
-
+function adjustPriceValueMin() {
+  const priceMin = document.getElementById("price-min");
+  const priceMax = document.getElementById("price-max");
+  
   // Ensure minimum value is not higher than maximum value
-  if (parseInt(priceMin.value) > parseInt(priceMax.value)) {
-    priceMin.value = priceMax.value;
+  if (parseInt(priceMin.value) > parseInt(priceMax.value)|| parseInt(priceMax.value) === parseInt(priceMin.value)  ) {
+    
+    priceMax.value = priceMin.value + 500;
   }
 
-  // Update minimum value display
-  //document.getElementById("price-value-min").textContent = priceMin.value;
+  document.getElementById("price-value-min").textContent = priceMin.value;
+  document.getElementById("price-value-max").textContent = priceMax.value;
 
-  // Ensure maximum value is not lower than minimum value
-  if (parseInt(priceMax.value) < parseInt(priceMin.value)) {
-    priceMax.value = priceMin.value;
+}
+
+function adjustPriceValueMax() {
+  const priceMin = document.getElementById("price-min");
+  const priceMax = document.getElementById("price-max");
+  
+  // Ensure maximum value is not lower than manimum value
+  if (parseInt(priceMax.value) < parseInt(priceMin.value) || parseInt(priceMax.value) === parseInt(priceMin.value) ) {
+    priceMin.value = priceMax.value - 500;
   }
 
-  // Update maximum value display
-  // document.getElementById("price-value-max").textContent = priceMax.value;
+  document.getElementById("price-value-min").textContent = priceMin.value;
+  document.getElementById("price-value-max").textContent = priceMax.value;
 }
 
 function showMultipleSleepingBags(data) {
