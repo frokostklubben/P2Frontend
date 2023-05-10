@@ -12,13 +12,18 @@ export function initSleepingBags() {
     .getElementById("submit-info")
     ?.addEventListener("click", sleepingBagFormSend);
   document.getElementById("temp")?.addEventListener("input", adjustTempValue);
-  document.getElementById("price")?.addEventListener("input", adjustPriceValue);
-}
 
+  document
+    .getElementById("price-min")
+    ?.addEventListener("input", adjustPriceValue);
+  document
+    .getElementById("price-max")
+    ?.addEventListener("input", adjustPriceValue);
+}
 
 function sleepingBagFormSend() {
   const trip = {};
-  
+
   try {
     const environmentTemperatureMin =
       document.getElementById("temp-value")?.textContent;
@@ -29,7 +34,15 @@ function sleepingBagFormSend() {
   } catch (error) {}
 
   try {
-    const maxCost = document.getElementById("price-value")?.textContent;
+    const minCost = document.getElementById("price-value-min")?.textContent;
+
+    if (minCost?.length !== 0) {
+      trip.minCost = minCost;
+    }
+  } catch (error) {}
+
+  try {
+    const maxCost = document.getElementById("price-value-max")?.textContent;
 
     if (maxCost?.length !== 0) {
       trip.maxCost = maxCost;
@@ -68,7 +81,7 @@ function sleepingBagFormSend() {
     }
   } catch (error) {}
 
-  fetchFilteredSleepingBags(trip)
+  fetchFilteredSleepingBags(trip);
 }
 
 function adjustTempValue() {
@@ -77,8 +90,32 @@ function adjustTempValue() {
 }
 
 function adjustPriceValue() {
-  const price = document.getElementById("price-value");
-  price.textContent = this.value;
+  const priceMin = document.getElementById("price-min").value;
+  const priceMax = document.getElementById("price-max").value;
+
+  const thumbLeft = document.querySelector(".slider > .thumb.left");
+  const thumbRight = document.querySelector(".slider > .thumb.right");
+  const range = document.querySelector(".slider > .range");
+
+  document.getElementById("price-value-min").textContent = priceMin;
+
+  document.getElementById("price-value-max").textContent = priceMax;
+
+  // Ensure minimum value is not higher than maximum value
+  if (parseInt(priceMin.value) > parseInt(priceMax.value)) {
+    priceMin.value = priceMax.value;
+  }
+
+  // Update minimum value display
+  //document.getElementById("price-value-min").textContent = priceMin.value;
+
+  // Ensure maximum value is not lower than minimum value
+  if (parseInt(priceMax.value) < parseInt(priceMin.value)) {
+    priceMax.value = priceMin.value;
+  }
+
+  // Update maximum value display
+  // document.getElementById("price-value-max").textContent = priceMax.value;
 }
 
 function showMultipleSleepingBags(data) {
@@ -103,30 +140,28 @@ function showMultipleSleepingBags(data) {
   `
   );
 
-  
-  document.getElementById("sleeping-bags-result").onclick = showSleepingBagDetails;
-
+  document.getElementById("sleeping-bags-result").onclick =
+    showSleepingBagDetails;
 
   const tableRowsString = tableRowsArray.join("\n");
   document.getElementById("sleeping-bags-result").innerHTML =
     sanitizeStringWithTableRows(tableRowsString);
 }
 
-
 async function showSleepingBagDetails(event) {
   const target = event.target;
   if (target.dataset.action == "details") {
-      const id = target.dataset.sku;
+    const id = target.dataset.sku;
 
-      // bootstrap 5 modal
-      document.querySelector("#exampleModalLabel").innerText =
-        "Information om sovepose " + id;
-  
-      // OBS modal, ikke ændres. Hente 1 sovepose @GetMapping("/{sku}
-      const sleepingbag = await fetch(URL + "/" + id)
-        .then((res) => res.json())
-        .then((sleepingbag) => {
-          document.querySelector("#modal-body").innerText = `
+    // bootstrap 5 modal
+    document.querySelector("#exampleModalLabel").innerText =
+      "Information om sovepose " + id;
+
+    // OBS modal, ikke ændres. Hente 1 sovepose @GetMapping("/{sku}
+    const sleepingbag = await fetch(URL + "/" + id)
+      .then((res) => res.json())
+      .then((sleepingbag) => {
+        document.querySelector("#modal-body").innerText = `
           Mærke: ${sleepingbag.brand}
           Produktnavn: ${sleepingbag.model}
           Pris: ${sleepingbag.cost}
@@ -138,18 +173,16 @@ async function showSleepingBagDetails(event) {
           Lagerstatus: ${sleepingbag.stockLocation}
           Varenr: ${sleepingbag.sku}
           `;
-          // Generate link to the sleepingbag at Friluftslands homepage
-          const link = generateLink(sleepingbag.sku);
-          document.querySelector("#modal-link").innerHTML = link;
-        });
-  
+        // Generate link to the sleepingbag at Friluftslands homepage
+        const link = generateLink(sleepingbag.sku);
+        document.querySelector("#modal-link").innerHTML = link;
+      });
   }
 }
 
 function generateLink(sku) {
   return `<a href="https://www.friluftsland.dk/msearch?q=${sku}" target="_blank">Link</a>`;
 }
-
 
 async function fetchFilteredSleepingBags(tripObj) {
   //TODO: change to true when security is added
