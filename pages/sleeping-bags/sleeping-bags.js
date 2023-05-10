@@ -89,7 +89,7 @@ function adjustTempValue() {
   temp.textContent = this.value;
 }
 
-
+s
 function adjustPriceValueMin() {
   const priceMin = document.getElementById("price-min");
   const priceMax = document.getElementById("price-max");
