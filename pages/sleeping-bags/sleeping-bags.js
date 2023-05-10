@@ -104,18 +104,15 @@ function adjustPriceValue() {
   // Ensure minimum value is not higher than maximum value
   if (parseInt(priceMin.value) > parseInt(priceMax.value)) {
     priceMin.value = priceMax.value;
-  }
 
-  // Update minimum value display
-  //document.getElementById("price-value-min").textContent = priceMin.value;
+    document.getElementById("price-value-min").textContent = priceMin.value;
+  }
 
   // Ensure maximum value is not lower than minimum value
   if (parseInt(priceMax.value) < parseInt(priceMin.value)) {
     priceMax.value = priceMin.value;
+    document.getElementById("price-value-max").textContent = priceMax.value;
   }
-
-  // Update maximum value display
-  // document.getElementById("price-value-max").textContent = priceMax.value;
 }
 
 function showMultipleSleepingBags(data) {
