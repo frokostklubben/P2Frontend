@@ -26,6 +26,13 @@ export function initSleepingBags() {
   document
     .getElementById("create-member")
     ?.addEventListener("click", saveResult);
+
+  var popoverTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="popover"]')
+  );
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl);
+  });
 }
 
 async function saveResult() {
@@ -132,7 +139,7 @@ function sleepingBagFormSend() {
       trip.personHeight = personHeight;
     }
   } catch (error) {}
-  
+
   try {
     const isInStore = document.getElementById("not-wider");
 
@@ -140,7 +147,6 @@ function sleepingBagFormSend() {
       trip.isInStore = "true";
     }
   } catch (error) {}
-  
 
   fetchFilteredSleepingBags(trip);
 }
@@ -194,7 +200,9 @@ function showMultipleSleepingBags() {
   </div>
   `;
 
-  document.getElementById("sort-select")?.addEventListener("change", sortChangeEventListener);
+  document
+    .getElementById("sort-select")
+    ?.addEventListener("change", sortChangeEventListener);
 
   sleepingBags.sort(compareSleepingBagCostLowFirst);
 
@@ -226,7 +234,8 @@ function showMultipleSleepingBagsResult() {
   `
   );
 
-  document.getElementById("sleeping-bags-result").onclick = showSleepingBagDetails;
+  document.getElementById("sleeping-bags-result").onclick =
+    showSleepingBagDetails;
 
   const tableRowsString = tableRowsArray.join("\n");
   document.getElementById("sleeping-bags-result").innerHTML =
@@ -236,25 +245,20 @@ function showMultipleSleepingBagsResult() {
 function sortChangeEventListener(event) {
   if (event.target.value == "sortCostLowFirst") {
     sleepingBags.sort(compareSleepingBagCostLowFirst);
-  }
-  else if (event.target.value == "sortCostHighFirst") {
+  } else if (event.target.value == "sortCostHighFirst") {
     sleepingBags.sort(compareSleepingBagCostHighFirst);
-  }
-  else if (event.target.value == "sortWeightLowFirst") {
+  } else if (event.target.value == "sortWeightLowFirst") {
     sleepingBags.sort(compareSleepingBagWeightLowFirst);
   }
   showMultipleSleepingBagsResult();
 }
 
-
 function compareSleepingBagCostLowFirst(sleepingBag1, sleepingBag2) {
   if (sleepingBag1.cost < sleepingBag2.cost) {
     return -1;
-  }
-  else if (sleepingBag1.cost > sleepingBag2.cost) {
+  } else if (sleepingBag1.cost > sleepingBag2.cost) {
     return 1;
-  }
-  else {
+  } else {
     return 0;
   }
 }
@@ -262,11 +266,9 @@ function compareSleepingBagCostLowFirst(sleepingBag1, sleepingBag2) {
 function compareSleepingBagCostHighFirst(sleepingBag1, sleepingBag2) {
   if (sleepingBag1.cost > sleepingBag2.cost) {
     return -1;
-  }
-  else if (sleepingBag1.cost < sleepingBag2.cost) {
+  } else if (sleepingBag1.cost < sleepingBag2.cost) {
     return 1;
-  }
-  else {
+  } else {
     return 0;
   }
 }
@@ -274,11 +276,9 @@ function compareSleepingBagCostHighFirst(sleepingBag1, sleepingBag2) {
 function compareSleepingBagWeightLowFirst(sleepingBag1, sleepingBag2) {
   if (sleepingBag1.productWeight < sleepingBag2.productWeight) {
     return -1;
-  }
-  else if (sleepingBag1.productWeight > sleepingBag2.productWeight) {
+  } else if (sleepingBag1.productWeight > sleepingBag2.productWeight) {
     return 1;
-  }
-  else {
+  } else {
     return 0;
   }
 }
@@ -286,14 +286,14 @@ function compareSleepingBagWeightLowFirst(sleepingBag1, sleepingBag2) {
 async function showSleepingBagDetails(event) {
   const target = event.target;
   if (target.dataset.action == "details") {
-      const sku = target.dataset.sku;
-      const sleepingBag = sleepingBags.find(element => element.sku == sku);
+    const sku = target.dataset.sku;
+    const sleepingBag = sleepingBags.find((element) => element.sku == sku);
 
-      // bootstrap 5 modal
-      document.querySelector("#exampleModalLabel").innerText =
-        "Information om sovepose " + sleepingBag.sku;
+    // bootstrap 5 modal
+    document.querySelector("#exampleModalLabel").innerText =
+      "Information om sovepose " + sleepingBag.sku;
 
-      document.querySelector("#modal-body").innerText = `
+    document.querySelector("#modal-body").innerText = `
       Mærke: ${sleepingBag.brand}
       Produktnavn: ${sleepingBag.model}
       Pris: ${sleepingBag.cost}
@@ -306,19 +306,17 @@ async function showSleepingBagDetails(event) {
       Varenr: ${sleepingBag.sku}
       `;
 
-      if (sleepingBag.note !== null) {
+    if (sleepingBag.note !== null) {
       document.querySelector("#modal-note").innerText = `
       Note: ${sleepingBag.note}
-      `
+      `;
     } else {
-      document.querySelector("#modal-note").innerText = ``
+      document.querySelector("#modal-note").innerText = ``;
     }
 
-
-
-      // Generate link to the sleepingbag at Friluftslands homepage
-      const link = generateLink(sleepingBag.sku);
-      document.querySelector("#modal-link").innerHTML = link;  
+    // Generate link to the sleepingbag at Friluftslands homepage
+    const link = generateLink(sleepingBag.sku);
+    document.querySelector("#modal-link").innerHTML = link;
   }
 }
 
