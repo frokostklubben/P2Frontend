@@ -33,11 +33,11 @@ export function initSleepingBags() {
     .querySelector("#delete-user-confirm")
     ?.addEventListener("click", deleteUserById);
 
-    showLogin();    
+  showLogin();
 
-  if (localStorage.getItem("user") !== null ) {
+  if (localStorage.getItem("user") !== null) {
     getMember();
-  } 
+  }
 }
 
 async function getMember() {
@@ -225,7 +225,6 @@ function sleepingBagFormSend() {
 }
 
 async function login() {
-
   document.querySelector("#delete-user-question").innerHTML = `
   <p>Er du sikker på, at du vil slette din bruger?</p>
   <button class="btn" id="delete-user-confirm">Ja</button>
@@ -233,9 +232,10 @@ async function login() {
   type="button"
   data-bs-dismiss="modal"
   aria-label="Close">Nej</button>
-  `
-  document.querySelector("#delete-user-confirm")?.addEventListener("click", deleteUserById)
-
+  `;
+  document
+    .querySelector("#delete-user-confirm")
+    ?.addEventListener("click", deleteUserById);
 
   const username = document.getElementById("login-email").value;
   const password = document.getElementById("login-password").value;
@@ -285,13 +285,15 @@ async function deleteUserById() {
 
     const options = makeOptions("DELETE", null, true);
 
-    const URL = apiURL + "/member"
-    
-    await fetch(URL, options).then(handleHttpErrors)
-    localStorage.clear()
-    document.querySelector("#status-delete").innerText = `Bruger ${memberToDelete} er slettet`
-    document.querySelector("#delete-user-question").innerText = ""
-    showLogin()
+    const URL = apiURL + "/member";
+
+    await fetch(URL, options).then(handleHttpErrors);
+    localStorage.clear();
+    document.querySelector(
+      "#status-delete"
+    ).innerText = `Bruger ${memberToDelete} er slettet`;
+    document.querySelector("#delete-user-question").innerText = "";
+    showLogin();
   } catch (err) {
     document.querySelector("#status-delete").innerText = `api-fejl`;
   }
@@ -399,7 +401,8 @@ function showMultipleSleepingBagsResult() {
   </div>`
   );
 
-  document.getElementById("sleeping-bags-result").onclick = showSleepingBagDetails;
+  document.getElementById("sleeping-bags-result").onclick =
+    showSleepingBagDetails;
 
   const tableRowsString = tableRowsArray.join("\n");
   document.getElementById("sleeping-bags-result").innerHTML = tableRowsString;

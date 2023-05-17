@@ -1,5 +1,23 @@
 <template>
 
+<style>
+  .btn-info {
+  color: #00461c;
+  background-color: white;
+  border-color: #00461c;
+  border-radius: 50%;
+  width: 1.2rem;
+  height: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1.2rem;
+}
+</style>
+
+
   <div class="row">
     <div class="col-lg-3">
       <div>
@@ -46,8 +64,18 @@
         </div>
 
         <div class="form-row">
-          <div class="form-group">
-            <label for="fill">Fyld:</label>
+          <div class="form-group d-flex align-items-center">
+            <label for="fill" class="mb-0 me-2">Fyld:</label>
+            <button type="button" class="btn btn-sm btn-info" data-bs-toggle="popover" title="Fiber/Dun" data-bs-content="Fiber:
+            Fordelen ved fiber er, at det er hydrofobisk og derfor tørrer hurtigt.
+            I modsætning til dun skal det ikke tørretumbles men blot hængetørres.
+            Er man nervøs for, om ens sovepose bliver våd eller fugtig, og har man et lavt budget, bør man overveje en sovepose med fiberfyld.
+            
+            Dun:
+            Fordelen ved dun er dens varmeevne ift. vægt, og hvor meget det fylder, når soveposen er pakket sammen.
+            Er vægt en høj prioritet for en, bør man overveje en sovepose af dette materiale">i</button>
+
+            
             <div class="d-flex justify-content-lg-start p-1">
               <div class="form-check form-check-inline">
                 <input
@@ -75,7 +103,9 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label for="cold">Er du kuldskær?</label>
+            <label for="cold" class="d-inline-flex align-items-center mb-0 me-2>Er du kuldskær?</label>
+            <button type="button" class="btn btn-sm btn-info" data-bs-toggle="popover" title="Er du kuldskær?" data-bs-content="Er man kuldskær udvælges soverposer ud fra deres 'komforttemperatur', og er man ikke kuldskær udvælges de ud fra deres 'lower limit-temperatur'.">i</button>
+        
             <div class="d-flex justify-content-lg-start p-1">
               <div class="form-check form-check-inline">
                 <input
